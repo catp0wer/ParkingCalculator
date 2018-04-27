@@ -8,7 +8,7 @@ import org.testng.annotations.DataProvider;
         public static Object[][] LogInCaseData(){
             return new Object[][]
                     {
-                            { "Economy Parking"},
+                            { "Economy Parking","4/11/2018"},
 
 
                     };
