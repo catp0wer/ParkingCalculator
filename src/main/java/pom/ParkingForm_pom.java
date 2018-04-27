@@ -8,13 +8,15 @@ public class ParkingForm_pom {
 
     By lot = By.id("Lot");
     By entryTime = By.xpath("//*[@id='EntryTime']");
-
     By exitTime = By.id("ExitTime");
-    By AM = By.xpath("//input[@value='AM']");
-    By PM = By.xpath("//input[@value='PM']");
-    By entryDate = By.id("EntryDate");
+    By AM = By.xpath("//input[@name='EntryTimeAMPM' and @value='AM']");
+    By PM = By.xpath("//input[@name='EntryTimeAMPM' and @value='PM']");
+    By entryDate = By.xpath("//*[@id='EntryDate']");
+    By exAM = By.xpath("//input[@name='ExitTimeAMPM' and @value='AM']");
+    By exPM = By.xpath("//input[@name='ExitTimeAMPM' and @value='PM']");
     By exitDate = By.id("ExitDate");
-    By calculateButton = By.id("Submit");
+    By calculateButton = By.xpath("//input[@value='Calculate']");
+    By sum = By.xpath("//table//tr[4]//b");
 
 
     public void selectLot(String lotType, WebDriver driver){
@@ -22,11 +24,40 @@ public class ParkingForm_pom {
         dr.selectByVisibleText(lotType);
 
     }
-    public void enterDate(String date, WebDriver driver){
-        driver.findElement(entryTime).sendKeys(date);
+    public void enterTime(String time, WebDriver driver){
+        driver.findElement(entryTime).sendKeys(time);
 
     }
 
+    public void enterPeriods(String period, WebDriver driver){
+        if(period =="AM"){
+        driver.findElement(AM).click();
+    } else{
+            driver.findElement(PM).click();
+        }
+    }
+    public void enterDate(String date, WebDriver driver){
+        driver.findElement(entryDate).sendKeys(date);
+    }
+    public void enterExitTime(String exTime, WebDriver driver){
+        driver.findElement(exitTime).sendKeys(exTime);
+    }
+    public void enterExPeriods(String period, WebDriver driver){
+        if(period =="AM"){
+            driver.findElement(exAM).click();
+        } else{
+            driver.findElement(exPM).click();
+        }
+    }
+    public void enterExitDate(String exDate, WebDriver driver){
+        driver.findElement(exitDate).sendKeys(exDate);
+    }
+    public String getMessageText(WebDriver driver){
+        return driver.findElement(sum).getText();
+    }
+    public void clickCalculate(WebDriver driver){
+        driver.findElement(calculateButton).click();
+    }
     public void clearAllfields(WebDriver driver) {
         driver.findElement(entryTime).clear();
         driver.findElement(exitTime).clear();
@@ -34,16 +65,18 @@ public class ParkingForm_pom {
         driver.findElement(exitDate).clear();
     }
 
-    public void calcul(String date,String lotType, WebDriver driver){
+    public void calcul(String lotType,String time,String period, String date,String time2,String period2,String date2,
+                       String suma, WebDriver driver){
         clearAllfields(driver);
         selectLot(lotType,driver);
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        enterTime(time,driver);
+        enterPeriods(period,driver);
         enterDate(date,driver);
-
+        enterExitTime(time2,driver);
+        enterExPeriods(period2,driver);
+        enterExitDate(date2,driver);
+        clickCalculate(driver);
+        getMessageText(driver);
     }
 
 }
