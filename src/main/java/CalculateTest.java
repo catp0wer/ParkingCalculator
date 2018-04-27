@@ -1,3 +1,4 @@
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
@@ -16,9 +17,13 @@ public class CalculateTest {
 
 
     @Test(dataProvider = "Data", dataProviderClass = DataProviderRep.class)
-    public void testCalcul(String lotType,String date) {
+    public void testCalcul(String lotType,String time,String period,String date, String time2,String period2,
+                           String date2,String suma) {
+
         ParkingForm_pom calculForm = new ParkingForm_pom();
-        calculForm.calcul(lotType,date,driver);
+        calculForm.calcul(lotType,time,period,date,time2,period2,date2,suma,driver);
+
+        Assert.assertEquals(calculForm.getMessageText(driver),suma);
 
         try {
             Thread.sleep(10000);
