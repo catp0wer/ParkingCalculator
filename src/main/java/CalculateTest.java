@@ -16,15 +16,15 @@ public class CalculateTest {
 
 
     @Test(dataProvider = "Data", dataProviderClass = DataProviderRep.class)
-    public void testCalcul(String lotType) {
+    public void testCalcul(String lotType,String date) {
         ParkingForm_pom calculForm = new ParkingForm_pom();
-        calculForm.calcul(lotType,driver);
-
+        calculForm.calcul(lotType,date,driver);
 
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
     }
 }
